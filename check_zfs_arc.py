@@ -126,6 +126,16 @@ class Checker:
             return ram_total
         except:
             return None
+        
+    def _get_arc_usage(self, input_text=None):
+        pattern = '^size\s+[0-9]\s+([0-9]+)$'
+        matches = re.search(pattern, input_text, re.MULTILINE)
+
+        try:
+            arc_usage = int(matches.group(1))
+            return arc_usage
+        except:
+            return None
 
     def handle(self):
         """Connect to Proxmox API, start the requested check and give result.

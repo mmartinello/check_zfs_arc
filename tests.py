@@ -51,15 +51,55 @@ class ParserTest(unittest.TestCase):
         ram_total = check._get_ram_total(input_text=content)
         self.assertIsNone(ram_total)
 
-def test_get_ram_total_missing(self):
+    def test_get_ram_total_missing(self):
+            check = checker.Checker()
+            input_file = 'examples/meminfo_wrong.txt'
+            file = open(input_file, mode='r')
+            content = file.read()
+            file.close()
+
+            ram_total = check._get_ram_total(input_text=content)
+            self.assertIsNone(ram_total)
+
+    def test_get_arc_usage_1(self):
         check = checker.Checker()
-        input_file = 'examples/meminfo_wrong.txt'
+        input_file = 'examples/arcstats_1.txt'
         file = open(input_file, mode='r')
         content = file.read()
         file.close()
 
-        ram_total = check._get_ram_total(input_text=content)
-        self.assertIsNone(ram_total)
+        arc_usage = check._get_arc_usage(input_text=content)
+        self.assertEqual(arc_usage, 67108139520)
+
+    def test_get_arc_usage_2(self):
+        check = checker.Checker()
+        input_file = 'examples/arcstats_2.txt'
+        file = open(input_file, mode='r')
+        content = file.read()
+        file.close()
+
+        arc_usage = check._get_arc_usage(input_text=content)
+        self.assertEqual(arc_usage, 56353584976)
+
+    def test_get_arc_usage_missing(self):
+        check = checker.Checker()
+        input_file = 'examples/arcstats_missing.txt'
+        file = open(input_file, mode='r')
+        content = file.read()
+        file.close()
+
+        arc_usage = check._get_arc_usage(input_text=content)
+        self.assertIsNone(arc_usage)
+
+    def test_get_arc_usage_wrong(self):
+        check = checker.Checker()
+        input_file = 'examples/arcstats_wrong.txt'
+        file = open(input_file, mode='r')
+        content = file.read()
+        file.close()
+
+        arc_usage = check._get_arc_usage(input_text=content)
+        self.assertIsNone(arc_usage)
 
 if __name__ == "__main__":
     unittest.main()
